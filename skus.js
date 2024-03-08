@@ -25,19 +25,26 @@ const xlsx = require('node-xlsx')
 const json2xls = require('json2xls')
 
 const CATEGORIES = [
-  'above_core',
+  'tradicionales', //
+  'innovaciones', //
+  'premium', //
   'beyond_beer',
-  'innovaciones',
-  'portafolio_foco',
-  'premium',
-  'premium_el_dorado',
-  'tradicionales',
-  'volumen_el_dorado',
   'marketplace',
+  'above_core',
+  'retornable', //
+  'portafolio_foco',
+  'volumen_el_dorado',
+  'premium_el_dorado',
+  'retornable_el_dorado',
+  'volumen_sellin', //
+  'volumen_sellout', //
+  'retornable_sellin', //
 ]
 
 const KPIS = {
   volumen: ['beyond_beer', 'innovaciones', 'tradicionales', 'premium'],
+  volumen_retornable: ['retornable'],
+  volumen_retornable_el_dorado: ['retornable_el_dorado'],
   innovaciones: ['innovaciones'],
   premium: ['premium'],
   beyond_beer: ['beyond_beer'],
@@ -45,8 +52,11 @@ const KPIS = {
   premium_el_dorado: ['premium_el_dorado'],
   above_core: ['above_core'],
   portafolio_focus: ['portafolio_foco'],
-  marketplace: ['marketplace']
-} 
+  marketplace: ['agua', 'cigarros', 'energizantes', 'hidratante', 'hard_liquor', 'rtd', 'refrescos', 'vendo'],
+  volumen_sellin: ['volumen_sellin'],
+  volumen_sellout: ['volumen_sellout'],
+  volumen_retornable_sellin: ['retornable_sellin']
+}
 
 /* 
   * Leer el catálogo
@@ -78,9 +88,10 @@ const getCatalogue = (fileName) => {
 */
 const getSkus = () => {
   let catalogue = getCatalogue('catalogue')
-  let catalogueElDorado = getCatalogue('eldorado')
+  // let catalogueElDorado = getCatalogue('eldorado')
 
-  let completeCatalogue = [...catalogue, ...catalogueElDorado]
+  // let completeCatalogue = [...catalogue, ...catalogueElDorado]
+  let completeCatalogue = [...catalogue]
 
   let skus = {}
   completeCatalogue.forEach( item => {
@@ -169,7 +180,7 @@ const init = () => {
   let changesToExternals = getChangesToExternals(externals, skus)
   
   let skusJson = JSON.stringify(skus)
-  fs.writeFileSync('output/skus_agosto.json', skusJson)
+  fs.writeFileSync('output/skus_agosto_2023.json', skusJson)
 
   let metricsJson = JSON.stringify(metrics)
   fs.writeFileSync('output/metrics.json', metricsJson)
